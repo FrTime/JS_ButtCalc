@@ -101,12 +101,12 @@ buttCalc = (width, substrate) => {
 };
 
 // Test calculations below
-buttCalc(25, substrates.rainDrain);
+// buttCalc(25, substrates.rainDrain);
 let userChoice = "raindrain";
 let userWidth = 25;
 
 for (const substrate in substrates) {
-  let userSubstrate = "";
+  let userSubstrate;
   if (
     substrates[substrate].substrateCode.indexOf(userChoice) > -1 ||
     substrates[substrate].names.indexOf(userChoice) > -1
