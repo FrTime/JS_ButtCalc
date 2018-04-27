@@ -7,7 +7,7 @@
 
 const substrates = {
   whiteWoven: {
-    substrate: ["hwwx-65-108", "hwwx-65-120"],
+    substrateCode: ["hwwx-65-108", "hwwx-65-120"],
     names: [
       "white woven",
       "hww",
@@ -22,9 +22,8 @@ const substrates = {
     coreDiameter: 6, // in inches
     thickness: 3.49 // in mils (thousandths of an inch)
   },
-
   highPermHP: {
-    substrate: ["hwhpx-82-108", "hwhpx-82-114", "hwhpx-82-120"],
+    substrateCode: ["hwhpx-82-108", "hwhpx-82-114", "hwhpx-82-120"],
     names: [
       "high perm",
       "hp",
@@ -39,9 +38,8 @@ const substrates = {
     coreDiameter: 7, // in inches
     thickness: 6.34 // in mils (thousandths of an inch)
   },
-
   lowPermLP: {
-    substrate: ["hwlpx-82-108", "hwlpx-82-114", "hwlpx-82-120"],
+    substrateCode: ["hwlpx-82-108", "hwlpx-82-114", "hwlpx-82-120"],
     names: [
       "low perm",
       "lp",
@@ -55,12 +53,43 @@ const substrates = {
     ],
     coreDiameter: 7, // in inches
     thickness: 6.34 // in mils (thousandths of an inch)
+  },
+  mediumPermMP: {
+    substrateCode: ["hwmp-90-108", "hwmp-90-120"],
+    names: [
+      "medium perm",
+      "med perm",
+      "mp",
+      "mediumperm",
+      "medperm",
+      "hwmp-90a",
+      "hwmp-90",
+      "hwmp",
+      "clopay"
+    ],
+    coreDiameter: 7, // in inches
+    thickness: 4.23 // in mils (thousandths of an inch)
+  },
+  rainDrain: {
+    substrateCode: ["hwd2-72-108", "hwd2-72-120"],
+    names: [
+      "rain drain",
+      "raindrain",
+      "dw",
+      "drain",
+      "rd",
+      "hwd2-72a",
+      "hwd2-72",
+      "hwd2"
+    ],
+    coreDiameter: 7, // in inches
+    thickness: 7.21 // in mils (thousandths of an inch)
   }
 };
 
 // The below function takes in as user-input the width of a butt roll in inches
 // Based on the selected substrate defined above, the calculator approximates the remaining length in linear feet
-buttCalc = (substrate, width) => {
+buttCalc = (width, substrate) => {
   let length =
     1000 *
     Math.PI /
@@ -71,5 +100,22 @@ buttCalc = (substrate, width) => {
   return length; // in linear feet
 };
 
-// Test calculation
-buttCalc(substrates.lowPermLP, 28);
+// Test calculations below
+buttCalc(25, substrates.rainDrain);
+let userChoice = "raindrain";
+let userWidth = 25;
+
+for (const substrate in substrates) {
+  let userSubstrate = "";
+  if (
+    substrates[substrate].substrateCode.indexOf(userChoice) > -1 ||
+    substrates[substrate].names.indexOf(userChoice) > -1
+  ) {
+    userSubstrate = substrates[substrate];
+    console.log(
+      `user has selected ${userChoice}\nuser has entered a width of ${userWidth}\nCalculating...`
+    );
+    buttCalc(userWidth, userSubstrate);
+    return;
+  }
+}
