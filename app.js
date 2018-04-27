@@ -84,6 +84,23 @@ const substrates = {
     ],
     coreDiameter: 7, // in inches
     thickness: 7.21 // in mils (thousandths of an inch)
+  },
+  kimberlyClarkKCD: {
+    substrateCode: ["hwlp-110-KCD-108", "hwlp-110-KCD-120", "hwlp-110-KCC-108", "hwlp-110-KCC-120"],
+    names: [
+      "kimberly clark",
+      "kimberly-clark",
+      "kc",
+      "kcc",
+      "kcd",
+      "hwlp-kc",
+      "hwlp-kcc",
+      "hwlp-kcd",
+      "hwo3lp-a",
+      "hwlp03lp"
+    ],
+    coreDiameter: 7, // in inches
+    thickness: 15.2 // in mils (thousandths of an inch)
   }
 };
 
@@ -95,14 +112,14 @@ buttCalc = (width, substrate) => {
     Math.PI /
     (48 * substrate.thickness) *
     (Math.pow(width, 2) - Math.pow(substrate.coreDiameter, 2));
-  length = "= " + length.toFixed(2) + " LF";
+  length = "= " + length.toFixed(0) + " LF";
   console.log(length);
   return length; // in linear feet
 };
 
 // Test calculations below
 // buttCalc(25, substrates.rainDrain);
-let userChoice = "LP";
+let userChoice = "kc";
 let userWidth = 25;
 
 for (const substrate in substrates) {
