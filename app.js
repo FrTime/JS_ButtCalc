@@ -119,9 +119,6 @@ buttCalc = (width, substrate) => {
   return length; // in linear feet
 };
 
-// Test calculations below
-// buttCalc(25, substrates.rainDrain);
-
 // Inquirer function that houses the user prompts and the butt roll calculator
 // The app will restart after making a successful calculation
 appStart = () => {
