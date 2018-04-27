@@ -103,6 +103,12 @@ const substrates = {
     ],
     coreDiameter: 7, // in inches
     thickness: 15.2 // in mils (thousandths of an inch)
+  },
+  feltexFLT: {
+    substrateCode: ["ruwflt-140-48", "ruwflt-140-96"],
+    names: ["feltex", "foda", "flt", "ruwflt", "ruwflt-140a", "ruwflt-140"],
+    coreDiameter: 7, // in inches
+    thickness: 5.5 // in mils (thousandths of an inch)
   }
 };
 
