@@ -95,25 +95,26 @@ buttCalc = (width, substrate) => {
     Math.PI /
     (48 * substrate.thickness) *
     (Math.pow(width, 2) - Math.pow(substrate.coreDiameter, 2));
-  length = length.toFixed(2) + " LF";
+  length = "= " + length.toFixed(2) + " LF";
   console.log(length);
   return length; // in linear feet
 };
 
 // Test calculations below
 // buttCalc(25, substrates.rainDrain);
-let userChoice = "raindrain";
+let userChoice = "LP";
 let userWidth = 25;
 
 for (const substrate in substrates) {
   let userSubstrate;
   if (
-    substrates[substrate].substrateCode.indexOf(userChoice) > -1 ||
-    substrates[substrate].names.indexOf(userChoice) > -1
+    substrates[substrate].substrateCode.indexOf(userChoice.toLowerCase()) >
+      -1 ||
+    substrates[substrate].names.indexOf(userChoice.toLowerCase()) > -1
   ) {
     userSubstrate = substrates[substrate];
     console.log(
-      `user has selected ${userChoice}\nuser has entered a width of ${userWidth}\nCalculating...`
+      `Calculating the remaining length of a ${userWidth}" roll of '${userChoice}'...`
     );
     buttCalc(userWidth, userSubstrate);
     return;
