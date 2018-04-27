@@ -1,10 +1,7 @@
-// The below variable is an object that houses all substrates
-// Inside each substrate object are the associated parameters:
-// The substrate code
-// Other names/associated terms
-// The average material thickness
-// The inner core diameter
+// inquirer is an npm package allowing for user prompts and input to be passed into functions
+var inquirer = require("inquirer");
 
+// The below variable is an object that houses all substrates and associated variables
 const substrates = {
   whiteWoven: {
     substrateCode: ["hwwx-65-108", "hwwx-65-120"],
@@ -86,7 +83,12 @@ const substrates = {
     thickness: 7.21 // in mils (thousandths of an inch)
   },
   kimberlyClarkKCD: {
-    substrateCode: ["hwlp-110-KCD-108", "hwlp-110-KCD-120", "hwlp-110-KCC-108", "hwlp-110-KCC-120"],
+    substrateCode: [
+      "hwlp-110-KCD-108",
+      "hwlp-110-KCD-120",
+      "hwlp-110-KCC-108",
+      "hwlp-110-KCC-120"
+    ],
     names: [
       "kimberly clark",
       "kimberly-clark",
@@ -119,21 +121,63 @@ buttCalc = (width, substrate) => {
 
 // Test calculations below
 // buttCalc(25, substrates.rainDrain);
-let userChoice = "kc";
-let userWidth = 25;
 
-for (const substrate in substrates) {
-  let userSubstrate;
-  if (
-    substrates[substrate].substrateCode.indexOf(userChoice.toLowerCase()) >
-      -1 ||
-    substrates[substrate].names.indexOf(userChoice.toLowerCase()) > -1
-  ) {
-    userSubstrate = substrates[substrate];
-    console.log(
-      `Calculating the remaining length of a ${userWidth}" roll of '${userChoice}'...`
-    );
-    buttCalc(userWidth, userSubstrate);
-    return;
-  }
-}
+// Inquirer function that houses the user prompts and the butt roll calculator
+// The app will restart after making a successful calculation
+appStart = () => {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Enter a material substrate:",
+        validate: entry => {
+          for (const substrate in substrates) {
+            if (
+              substrates[substrate].substrateCode.indexOf(entry.toLowerCase()) >
+                -1 ||
+              substrates[substrate].names.indexOf(entry.toLowerCase()) > -1
+            ) {
+              return true;
+            }
+          }
+          return "Please enter a valid substrate.";
+        },
+        name: "userSubstrate"
+      },
+
+      {
+        type: "input",
+        message: "Enter the roll outer diameter in inches:",
+        validate: entry => {
+          if (isNaN(entry)) {
+            return "Please enter a number.";
+          } else return true;
+        },
+        name: "userWidth"
+      }
+    ])
+    .then(inq => {
+      let selectedSubstrate = inq.userSubstrate;
+      let selectedWidth = inq.userWidth;
+      for (const substrate in substrates) {
+        let userSubstrate;
+        if (
+          substrates[substrate].substrateCode.indexOf(
+            selectedSubstrate.toLowerCase()
+          ) > -1 ||
+          substrates[substrate].names.indexOf(selectedSubstrate.toLowerCase()) >
+            -1
+        ) {
+          userSubstrate = substrates[substrate];
+          console.log(
+            `Calculating the remaining length of a "${selectedSubstrate}" roll of '${selectedWidth}'...`
+          );
+          buttCalc(selectedWidth, userSubstrate);
+          appStart();
+        }
+      }
+    });
+};
+
+// Starts the app when the script is loaded
+appStart();
